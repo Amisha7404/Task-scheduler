@@ -1,0 +1,4 @@
+// Store the data in JSON format. -- Single entry format : { email: { code: 'xxxxx' } }
+{
+  "user@example.com": { "code": "123456" }
+}

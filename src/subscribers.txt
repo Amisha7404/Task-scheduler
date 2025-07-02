@@ -1,0 +1,14 @@
+function unsubscribeEmail(string $email): bool {
+    $file = __DIR__ . '/subscribers.json';
+
+    if (!file_exists($file)) return false;
+
+    $subscribers = json_decode(file_get_contents($file), true);
+
+    if (!in_array($email, $subscribers)) return false;
+
+    $subscribers = array_values(array_filter($subscribers, fn($e) => $e !== $email));
+
+    file_put_contents($file, json_encode($subscribers, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    return true;
+}

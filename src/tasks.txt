@@ -1,0 +1,14 @@
+// Store the data in JSON format.
+function addTask(string $task_name): bool {
+    $file = __DIR__ . '/tasks.json';
+    $tasks = file_exists($file) ? json_decode(file_get_contents($file), true) : [];
+
+    foreach ($tasks as $task) {
+        if (trim($task['name']) === trim($task_name)) return false; // Duplicate
+    }
+
+    $new_id = count($tasks) > 0 ? max(array_keys($tasks)) + 1 : 1;
+    $tasks[$new_id] = ['name' => trim($task_name), 'completed' => 0];
+
+    return file_put_contents($file, json_encode($tasks, JSON_PRETTY_PRINT)) !== false;
+}
